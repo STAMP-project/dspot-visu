@@ -67,11 +67,16 @@ d3.select(window).on('resize', function(){
 <script>
     //Input handling
 
-    const DEVICE = "nanoKONTROL2 SLIDER/KNOB";
+    const DEVICE_PREFIX = "nanoKONTROL2";
 
     function translateMIDIMesage(message) {
-        debugger;
-        console.log("message");
+        let data = message.data;
+
+        let command = data[0];
+        let note = data[1];
+        let velocity = data[2];
+
+        console.log(command + " " + note + " " + velocity);
     }
 
     function onMIDIFailure(reason) {
@@ -89,5 +94,5 @@ d3.select(window).on('resize', function(){
         }
     }
 
-    setMIDIInputControl(DEVICE, translateMIDIMesage, onMIDIFailure);
+    setMIDIInputControl(DEVICE_PREFIX, translateMIDIMesage, onMIDIFailure);
 </script>
