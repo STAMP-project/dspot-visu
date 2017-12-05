@@ -36,7 +36,7 @@ app.get('/data/:note/:velocity', function(req, res){
     var note = req.params.note;
     var velocity = req.params.velocity;
     if (note == 0 && velocity ==0){
-      var tab =  JSON.parse(JSON.stringify(tabinitial))          
+      var tab = [];// JSON.parse(JSON.stringify(tabinitial))          
       for(var i = 0; i < 8;i++){
         var o1 = {};
         o1.name = 'coverageTest' + i;
@@ -143,7 +143,6 @@ app.get('/data/:note/:velocity', function(req, res){
     tabcurrent =  JSON.parse(JSON.stringify(tab))    
   }
     res.json(tab);
-
 });
   
 app.post('/upload', function(req, res){
