@@ -15,5 +15,14 @@
   "bugs": {
     "url": "https://github.com/STAMP-project/dspot-visu/issues"
   },
-  "homepage": "https://github.com/STAMP-project/dspot-visu#readme"
+  "homepage": "https://github.com/STAMP-project/dspot-visu#readme",
+  "dependencies": {
+    "express": "^4.16.2",
+    "formidable": "^1.1.1",
+    "glob": "^7.1.2",
+    "jsel": "^1.1.6",
+    "path": "^0.12.7",
+    "randomstring": "^1.1.5",
+    "tmp": "0.0.33"
+  }
 }
