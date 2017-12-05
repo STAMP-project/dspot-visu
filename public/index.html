@@ -2,7 +2,7 @@
 <meta charset="utf-8">
 <style> /* set the CSS */
 
-.bar { fill: steelblue; }
+.foo1 { fill: steelblue; }
 
 </style>
 <body>
@@ -18,9 +18,13 @@ crossorigin="anonymous"></script>
 
 
 // set the dimensions and margins of the graph
-var margin = {top: 20, right: 20, bottom: 30, left: 40},
+var margin = {top: 20, right: 20, bottom: 150, left: 40},
     width = 1400 - margin.left - margin.right,
-    height = 600 - margin.top - margin.bottom;
+    height = 800 - margin.top - margin.bottom;
+
+
+    colors =d3.schemeCategory20;
+    console.log(colors);
 
 // set the ranges
 var x = d3.scaleBand()
@@ -66,16 +70,42 @@ $.ajax({
       .attr("width", x.bandwidth())
       .attr("y", function(d) { return y(d.value); })
       .attr("height", function(d) { return height - y(d.value); })
+      .attr("fill",function(d,i){return colors[i%2]})
       ;
+
+      svg.selectAll("text.bar")
+        .data(data)
+      .enter().append("text")
+        .attr("class", "bar")
+        .attr("class", "foo1")
+        .attr("text-anchor", "middle")
+        .attr("x", function(d) { return x(d.name) + 40; })
+        .attr("y", function(d) { return y(d.value) - 10; })
+        .style("font-size","18px")
+        .text(function(d) { return '('+d.testadded+')('+d.assertadded+')' });
+
 
   // add the x Axis
   svg.append("g")
       .attr("transform", "translate(0," + height + ")")
-      .call(d3.axisBottom(x));
+      .call(d3.axisBottom(x))
+      .selectAll("text")	
+        .style("text-anchor", "end")
+        .attr("transform", "rotate(-75)")
+        .attr("dx", "-.8em")
+        .attr("x", "-10px")
+        .attr("dy", "1.7em")
+        .style("font-size","15px");
+      ;
+
+
 
   // add the y Axis
   svg.append("g")
       .call(d3.axisLeft(y));
+
+      
+
 
 });
 
@@ -86,15 +116,23 @@ function updateData(note,velocity) {
         url: "/data/"+note+'/'+velocity,
         method: "GET"
     }).then(function(data) {
+       console.log();
+//        svg.selectAll("text.foo1");
         svg.selectAll("rect")
         .data(data)
       .transition()
         .duration(1000)
         .attr("y", function(d) { return y(d.value); })
         .attr("height", function(d) { return height - y(d.value);  });
+    
+        svg.selectAll("text.foo1")
+        .data(data)
+          .transition()
+        .duration(1000)
+        .attr("y", function(d) { return y(d.value) - 10; })
+        .text(function(d) { return '('+d.testadded+')('+d.assertadded+')' });
+
  
-//  console.log(data);
-  // format the data
 
 });
 

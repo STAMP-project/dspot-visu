@@ -45,6 +45,11 @@ app.get('/data/:note/:velocity', function(req, res){
         var o2 = {};
         o2.name = 'killMutant' + i;
         o2.value = getRandomInt(0,100);
+        o1.testadded = getRandomInt(0,10)
+        o1.assertadded = getRandomInt(0,10)
+        o2.testadded = getRandomInt(0,10)
+        o2.assertadded = getRandomInt(0,10)
+
         tab.push(o2);
       }      
       tabinitial= tab;
@@ -60,6 +65,10 @@ app.get('/data/:note/:velocity', function(req, res){
       var o2 = {};
       o2.name = 'killMutant' + 0;
       o2.value = getRandomInt(0,100);
+      o1.testadded = getRandomInt(0,10)
+      o1.assertadded = getRandomInt(0,10)
+      o2.testadded = getRandomInt(0,10)
+      o2.assertadded = getRandomInt(0,10)
       tab.splice(0, 0, o2);
       tab.splice(0, 0, o1);
     }
@@ -71,6 +80,11 @@ app.get('/data/:note/:velocity', function(req, res){
       var o2 = {};
       o2.name = 'killMutant' + 1;
       o2.value = getRandomInt(0,100);
+      o1.testadded = getRandomInt(0,10)
+      o1.assertadded = getRandomInt(0,10)
+      o2.testadded = getRandomInt(0,10)
+      o2.assertadded = getRandomInt(0,10)
+
       tab.splice(2, 0, o2);
       tab.splice(2, 0, o1);
     }
@@ -82,6 +96,11 @@ app.get('/data/:note/:velocity', function(req, res){
       var o2 = {};
       o2.name = 'killMutant' + 2;
       o2.value = getRandomInt(0,100);
+      o1.testadded = getRandomInt(0,10)
+      o1.assertadded = getRandomInt(0,10)
+      o2.testadded = getRandomInt(0,10)
+      o2.assertadded = getRandomInt(0,10)
+
       tab.splice(4, 0, o2);
       tab.splice(4, 0, o1);
     }
@@ -93,6 +112,11 @@ app.get('/data/:note/:velocity', function(req, res){
       var o2 = {};
       o2.name = 'killMutant' + 3;
       o2.value = getRandomInt(0,100);
+      o1.testadded = getRandomInt(0,10)
+      o1.assertadded = getRandomInt(0,10)
+      o2.testadded = getRandomInt(0,10)
+      o2.assertadded = getRandomInt(0,10)
+
       tab.splice(6, 0, o2);
       tab.splice(6, 0, o1);
     }
@@ -104,6 +128,11 @@ app.get('/data/:note/:velocity', function(req, res){
       var o2 = {};
       o2.name = 'killMutant' + 4;
       o2.value = getRandomInt(0,100);
+      o1.testadded = getRandomInt(0,10)
+      o1.assertadded = getRandomInt(0,10)
+      o2.testadded = getRandomInt(0,10)
+      o2.assertadded = getRandomInt(0,10)
+
       tab.splice(8, 0, o2);
       tab.splice(8, 0, o1);
     }
@@ -115,6 +144,11 @@ app.get('/data/:note/:velocity', function(req, res){
       var o2 = {};
       o2.name = 'killMutant' + 5;
       o2.value = getRandomInt(0,100);
+      o1.testadded = getRandomInt(0,10)
+      o1.assertadded = getRandomInt(0,10)
+      o2.testadded = getRandomInt(0,10)
+      o2.assertadded = getRandomInt(0,10)
+
       tab.splice(10, 0, o2);
       tab.splice(10, 0, o1);
     }
@@ -126,6 +160,11 @@ app.get('/data/:note/:velocity', function(req, res){
       var o2 = {};
       o2.name = 'killMutant' + 6;
       o2.value = getRandomInt(0,100);
+      o1.testadded = getRandomInt(0,10)
+      o1.assertadded = getRandomInt(0,10)
+      o2.testadded = getRandomInt(0,10)
+      o2.assertadded = getRandomInt(0,10)
+
       tab.splice(12, 0, o2);
       tab.splice(12, 0, o1);
     }
@@ -137,6 +176,11 @@ app.get('/data/:note/:velocity', function(req, res){
       var o2 = {};
       o2.name = 'killMutant' + 7;
       o2.value = getRandomInt(0,100);
+      o1.testadded = getRandomInt(0,10)
+      o1.assertadded = getRandomInt(0,10)
+      o2.testadded = getRandomInt(0,10)
+      o2.assertadded = getRandomInt(0,10)
+
       tab.splice(14, 0, o2);
       tab.splice(14, 0, o1);
     }
