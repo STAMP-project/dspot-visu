@@ -5,6 +5,7 @@ src="https://code.jquery.com/jquery-3.2.1.min.js"
 integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
 crossorigin="anonymous"></script>
 <script src="chart.js"></script>
+<script src="midi.js"></script>
 
 <style>
 /* a little bit of CSS to make the chart readable */
@@ -61,4 +62,32 @@ d3.select(window).on('resize', function(){
     chart.draw();
 });
 
+</script>
+
+<script>
+    //Input handling
+
+    const DEVICE = "nanoKONTROL2 SLIDER/KNOB";
+
+    function translateMIDIMesage(message) {
+        debugger;
+        console.log("message");
+    }
+
+    function onMIDIFailure(reason) {
+        if(!reason.support) {
+            console.error("MIDI not supported");
+            return;
+        }
+        if(!reason.granted) {
+            console.error("No permission to use MIDI");
+            return;
+        }
+
+        if(!reason.found) {
+            console.error("Device was not found");
+        }
+    }
+
+    setMIDIInputControl(DEVICE, translateMIDIMesage, onMIDIFailure);
 </script>
