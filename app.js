@@ -35,8 +35,14 @@ app.get('/data', function(req, res){
     var tab = [];
 
     for(var i = 0; i < 10;i++){
-      var o = [getRandomInt(0,100),getRandomInt(0,100)];
-      tab.push(o);
+      var o1 = {};
+      o1.name = 'coverageTest' + i;
+      o1.value = getRandomInt(0,100);
+      tab.push(o1);
+      var o2 = {};
+      o2.name = 'killMutant' + i;
+      o2.value = getRandomInt(0,100);
+      tab.push(o2);
     }      
     res.json(tab);
 

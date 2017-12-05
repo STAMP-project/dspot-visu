@@ -5,9 +5,10 @@ function setMIDIInputControl(name, onMessage, onFailure) {
             let inputs = access.inputs.values();
             for (var input = inputs.next(); input && !input.done; input = inputs.next()) 
             {
-                
+                console.log(input.value.name);
                 if(input.value.name == name) {
                     input.value.onmidimessage = onMessage;
+
                     return;
                 }
             }
