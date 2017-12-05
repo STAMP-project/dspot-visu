@@ -1,0 +1,19 @@
+{
+  "name": "dspot-demovisu",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/STAMP-project/dspot-visu.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/STAMP-project/dspot-visu/issues"
+  },
+  "homepage": "https://github.com/STAMP-project/dspot-visu#readme"
+}
