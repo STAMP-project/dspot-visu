@@ -6,7 +6,7 @@ function setMIDIInputControl(name, onMessage, onFailure) {
             for (var input = inputs.next(); input && !input.done; input = inputs.next()) 
             {
                 console.log(input.value.name);
-                if(input.value.name == name) {
+                if(input.value.name.startsWith(name)) {
                     input.value.onmidimessage = onMessage;
 
                     return;

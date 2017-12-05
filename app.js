@@ -29,21 +29,119 @@ app.get('/', function(req, res){
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
+var tabinitial = [];
+var tabcurrent = [];
 
-app.get('/data', function(req, res){
- 
-    var tab = [];
-
-    for(var i = 0; i < 10;i++){
+app.get('/data/:note/:velocity', function(req, res){
+    var note = req.params.note;
+    var velocity = req.params.velocity;
+    if (note == 0 && velocity ==0){
+      var tab =  JSON.parse(JSON.stringify(tabinitial))          
+      for(var i = 0; i < 8;i++){
+        var o1 = {};
+        o1.name = 'coverageTest' + i;
+        o1.value = getRandomInt(0,100);
+        tab.push(o1);
+        var o2 = {};
+        o2.name = 'killMutant' + i;
+        o2.value = getRandomInt(0,100);
+        tab.push(o2);
+      }      
+      tabinitial= tab;
+    }else 
+    {
+      var tab =  JSON.parse(JSON.stringify(tabcurrent))    
+      
+      if (note ==0 || note ==16){
+      tab.splice(0, 2);
       var o1 = {};
-      o1.name = 'coverageTest' + i;
+      o1.name = 'coverageTest' + 0;
       o1.value = getRandomInt(0,100);
-      tab.push(o1);
       var o2 = {};
-      o2.name = 'killMutant' + i;
+      o2.name = 'killMutant' + 0;
       o2.value = getRandomInt(0,100);
-      tab.push(o2);
-    }      
+      tab.splice(0, 0, o2);
+      tab.splice(0, 0, o1);
+    }
+    else if (note ==1 || note ==17){
+      tab.splice(2, 2);
+      var o1 = {};
+      o1.name = 'coverageTest' + 1;
+      o1.value = getRandomInt(0,100);
+      var o2 = {};
+      o2.name = 'killMutant' + 1;
+      o2.value = getRandomInt(0,100);
+      tab.splice(2, 0, o2);
+      tab.splice(2, 0, o1);
+    }
+    else if (note ==2 || note ==18){
+      tab.splice(4, 2);
+      var o1 = {};
+      o1.name = 'coverageTest' + 2;
+      o1.value = getRandomInt(0,100);
+      var o2 = {};
+      o2.name = 'killMutant' + 2;
+      o2.value = getRandomInt(0,100);
+      tab.splice(4, 0, o2);
+      tab.splice(4, 0, o1);
+    }
+    else if (note ==3 || note ==19){
+      tab.splice(6, 2);
+      var o1 = {};
+      o1.name = 'coverageTest' + 3;
+      o1.value = getRandomInt(0,100);
+      var o2 = {};
+      o2.name = 'killMutant' + 3;
+      o2.value = getRandomInt(0,100);
+      tab.splice(6, 0, o2);
+      tab.splice(6, 0, o1);
+    }
+    else if (note ==4 || note ==20){
+      tab.splice(8, 2);
+      var o1 = {};
+      o1.name = 'coverageTest' + 4;
+      o1.value = getRandomInt(0,100);
+      var o2 = {};
+      o2.name = 'killMutant' + 4;
+      o2.value = getRandomInt(0,100);
+      tab.splice(8, 0, o2);
+      tab.splice(8, 0, o1);
+    }
+    else if (note ==5 || note ==21){
+      tab.splice(10, 2);
+      var o1 = {};
+      o1.name = 'coverageTest' + 5;
+      o1.value = getRandomInt(0,100);
+      var o2 = {};
+      o2.name = 'killMutant' + 5;
+      o2.value = getRandomInt(0,100);
+      tab.splice(10, 0, o2);
+      tab.splice(10, 0, o1);
+    }
+    else if (note ==6 || note ==22){
+      tab.splice(12, 2);
+      var o1 = {};
+      o1.name = 'coverageTest' + 6;
+      o1.value = getRandomInt(0,100);
+      var o2 = {};
+      o2.name = 'killMutant' + 6;
+      o2.value = getRandomInt(0,100);
+      tab.splice(12, 0, o2);
+      tab.splice(12, 0, o1);
+    }
+    else if (note ==7 || note ==23){
+      tab.splice(14, 2);
+      var o1 = {};
+      o1.name = 'coverageTest' + 7;
+      o1.value = getRandomInt(0,100);
+      var o2 = {};
+      o2.name = 'killMutant' + 7;
+      o2.value = getRandomInt(0,100);
+      tab.splice(14, 0, o2);
+      tab.splice(14, 0, o1);
+    }
+    tabcurrent =  JSON.parse(JSON.stringify(tab))    
+  }
     res.json(tab);
 
 });

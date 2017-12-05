@@ -42,7 +42,7 @@ var svg = d3.select("body").append("svg")
 // get the data
 
 $.ajax({
-        url: "/data",
+        url: "/data/0/0",
         method: "GET"
     }).then(function(data) {
 
@@ -79,13 +79,12 @@ $.ajax({
 });
 
 
-function updateData() {
+function updateData(note,velocity) {
      
     $.ajax({
-        url: "/data",
+        url: "/data/"+note+'/'+velocity,
         method: "GET"
     }).then(function(data) {
-
         svg.selectAll("rect")
         .data(data)
       .transition()
@@ -93,7 +92,7 @@ function updateData() {
         .attr("y", function(d) { return y(d.value); })
         .attr("height", function(d) { return height - y(d.value);  });
  
-  console.log(data);
+//  console.log(data);
   // format the data
 
 });
@@ -105,13 +104,16 @@ function updateData() {
 
 <script>
     //Input handling
-
-    const DEVICE = "nanoKONTROL2 MIDI 1";
+    const DEVICE_PREFIX = "nanoKONTROL2";
 
     function translateMIDIMesage(message) {
-//          debugger;
-        console.log("message");
-        updateData();
+        let data = message.data;
+
+        let command = data[0];
+        let note = data[1];
+        let velocity = data[2];
+        console.log(command + " " + note + " " + velocity);
+        updateData(note,velocity);
     }
 
     function onMIDIFailure(reason) {
@@ -129,5 +131,5 @@ function updateData() {
         }
     }
 
-    setMIDIInputControl(DEVICE, translateMIDIMesage, onMIDIFailure);
+    setMIDIInputControl(DEVICE_PREFIX, translateMIDIMesage, onMIDIFailure);
 </script>
