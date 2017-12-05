@@ -1,5 +1,9 @@
 <!-- load in D3 and Chart constructor scripts -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
+<script
+src="https://code.jquery.com/jquery-3.2.1.min.js"
+integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+crossorigin="anonymous"></script>
 <script src="chart.js"></script>
 
 <style>
@@ -13,10 +17,6 @@
 <!-- here's the div our chart will be injected into -->
 <div class="chart-container" style="max-width: 1000px;"></div>
 
-<!-- these will be made useful in the script below -->
-<button class="color" data-color="red">red bars</button>
-<button class="color" data-color="green">green bars</button>
-<button class="color" data-color="blue">blue bars</button>
 <button class="data">change data</button>
 
 <script>
@@ -33,9 +33,25 @@ d3.selectAll('button.color').on('click', function(){
     chart.setColor( color );
 });
 
+function flatten(arr) {
+  return arr.reduce(function (flat, toFlatten) {
+    return flat.concat(Array.isArray(toFlatten) ? flatten(toFlatten) : toFlatten);
+  }, []);
+}
+
 // change data on click to something randomly-generated
 d3.selectAll('button.data').on('click', function(){
-    chart.setData(d3.range(1000).map(function(){return Math.random() * 50}));
+    $.ajax({
+        url: "/data",
+        method: "GET"
+    }).then(function(data) {
+        console.log(data);
+        console.log(flatten(data));
+//        chart.setData(d3.range(1000).map(function(){return Math.random() * 50}));
+        console.log(d3.range(100).map(function(){return Math.random() * 50}));
+        chart.setData(flatten(data));
+    });
+
 });
 
 // redraw chart on each resize
