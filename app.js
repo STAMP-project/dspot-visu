@@ -10,6 +10,7 @@ const glob = require('glob');
 var jsel = require('jsel');
 var bodyParser = require('body-parser')
 
+const NUMBER_OF_TESTS = 8;
 
 app.use( bodyParser.json() );       // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
@@ -22,6 +23,43 @@ function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
   }
 
+function precomputeTable(folder) {
+  let table = [];
+  for(let test = 0; test < NUMBER_OF_TESTS; test++) {
+    table.push(precomputeOneTest(test));
+  }
+  return table;
+}
+
+function precomputeOneTest(test) {
+  let patternPrefix = "output/generated_method_" + test;
+  let result = {};
+  for(let generated = 10; generated <= 50; generated += 10) {
+    result[generated] = {};
+    for(let assertions = 1; assertions <= 5; assertions++) {
+      result[generated][assertions] = aggregateFiles(patternPrefix + "_" + generated + "_" + assertions + "*.json");
+    }
+  }
+  return result;
+}
+
+function aggregateFiles(pattern) {
+  let mutants = new Set();
+  let instructions = new Set();
+  let files = glob.sync(pattern);
+  for(let index = 0; index < files.length; index++) {
+    let data = JSON.parse(fs.readFileSync(files[index], 'utf8'));
+    for(let item in new Set(data["killed_mutant_identifiers_after"])){
+      mutants.add(item);
+    }
+    for(let item in new Set(data["covered_jacoco_instructions"])){
+      instructions.add(item);
+    }
+  }
+  return {'mutants_killed': mutants.length, "instructions_covered": instructions.length};
+}
+
+
 
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -32,8 +70,30 @@ app.get('/', function(req, res){
 var tabinitial = [];
 var tabcurrent = [];
 
-app.get('/data/:note/:velocity', function(req, res){
-    var note = req.params.note;
+const TABLE = precomputeTable();
+
+app.get('/data/:tests/:assertions', function(req, res){
+  let tests = req.params.tests;
+  let assertions = req.params.assertions;
+  
+  let result = [];
+
+  for(let test = 0; test < NUMBER_OF_TESTS; test++) {
+    let row = TABLE[test][tests][assertions];
+    let o1 = {};
+    //o1.name = "TBA";
+    o1.value = row.mutants_killed;
+    result.add(o1);
+    o2.value = row.instructions_covered;
+  }
+
+  return res.json(tab);
+
+});
+
+app.get('/midi/:note/:velocity', function(req, res) {
+
+  var note = req.params.note;
     var velocity = req.params.velocity;
     if (note == 0 && velocity ==0){
       var tab = [];// JSON.parse(JSON.stringify(tabinitial))          
