@@ -37,7 +37,7 @@ function precomputeOneTest(test) {
   for(let generated = 10; generated <= 50; generated += 10) {
     result[generated] = {};
     for(let assertions = 1; assertions <= 5; assertions++) {
-      result[generated][assertions] = aggregateFiles(patternPrefix + "_" + generated + "_" + assertions + "*.json");
+      result[generated][assertions] = aggregateFiles(patternPrefix + "_" + assertions + "_" + generated + "*.json");
     }
   }
   return result;
@@ -49,14 +49,14 @@ function aggregateFiles(pattern) {
   let files = glob.sync(pattern);
   for(let index = 0; index < files.length; index++) {
     let data = JSON.parse(fs.readFileSync(files[index], 'utf8'));
-    for(let item in new Set(data["killed_mutant_identifiers_after"])){
+    for(let item of new Set(data["killed_mutant_identifiers_after"])) {
       mutants.add(item);
     }
-    for(let item in new Set(data["covered_jacoco_instructions"])){
+    for(let item of new Set(data["covered_jacoco_instructions"])){
       instructions.add(item);
     }
   }
-  return {'mutants_killed': mutants.length, "instructions_covered": instructions.length};
+  return {'mutants_killed': mutants.size, "instructions_covered": instructions.size};
 }
 
 
@@ -76,18 +76,17 @@ app.get('/data/:tests/:assertions', function(req, res){
   let tests = req.params.tests;
   let assertions = req.params.assertions;
   
+  //TODO: Verify the parameters
+
   let result = [];
 
   for(let test = 0; test < NUMBER_OF_TESTS; test++) {
     let row = TABLE[test][tests][assertions];
-    let o1 = {};
-    //o1.name = "TBA";
-    o1.value = row.mutants_killed;
-    result.add(o1);
-    o2.value = row.instructions_covered;
+    result.push({value: row.mutants_killed});
+    result.push({value: row.instructions_covered});
   }
 
-  return res.json(tab);
+  return res.json(result);
 
 });
 
