@@ -29,6 +29,10 @@ app.get('/', function(req, res){
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
+let rawdata = fs.readFileSync('com.squareup.javapoet.ParameterSpecTest.json');
+let values = JSON.parse(rawdata);
+fullQualifiedName = values["qualifiedName"]
+
 var tabinitial = [];
 var tabcurrent = [];
 
@@ -36,8 +40,22 @@ app.get('/data/:note/:velocity', function(req, res){
     var note = req.params.note;
     var velocity = req.params.velocity;
     if (note == 0 && velocity ==0){
-      var tab = [];// JSON.parse(JSON.stringify(tabinitial))          
-      for(var i = 0; i < 8;i++){
+      var tab = [];// JSON.parse(JSON.stringify(tabinitial))
+      var o1 = {};
+      o1.name = 'coverMutant' + fullQualifiedName;
+      o1.value = values["data"][0]["nbMutantCovered"];
+      o1.testadded = values["data"][0]["nbAssertionsAdded"];
+      o1.assertadded = values["data"][0]["nbTests"];
+      tab.push(o1);
+
+      var o2 = {};
+      o2.name = 'killMutant' + fullQualifiedName;
+      o2.value =values["data"][0]["nbMutantKilled"];
+      o2.testadded = values["data"][0]["nbAssertionsAdded"];
+      o2.assertadded = values["data"][0]["nbTests"];
+
+      tab.push(o2);
+      for(var i = 1; i < 8;i++){
         var o1 = {};
         o1.name = 'coverageTest' + i;
         o1.value = getRandomInt(0,100);
