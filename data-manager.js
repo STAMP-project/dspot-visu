@@ -24,7 +24,7 @@ function getTesClassData(testClassRecord) {
         maxCovered: 0,
         maxTests: testClassRecord.maxTests,
         maxAssertions: testClassRecord.maxAssertions,
-        matrix: createMatrix(testClassRecord.maxTests, testClassRecord.maxAssertions),
+        matrix: createMatrix(testClassRecord.maxTests + 1, testClassRecord.maxAssertions + 1), //Plus one to include the test without amplification
     }
 
     for(let item of testClassRecord.data) {
