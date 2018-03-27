@@ -21,12 +21,7 @@
   "dependencies": {
     "body-parser": "^1.18.2",
     "express": "^4.16.2",
-    "formidable": "^1.1.1",
-    "glob": "^7.1.2",
-    "jsel": "^1.1.6",
     "jsonfile": "^4.0.0",
-    "path": "^0.12.7",
-    "randomstring": "^1.1.5",
-    "tmp": "0.0.33"
+    "path": "^0.12.7"
   }
 }
