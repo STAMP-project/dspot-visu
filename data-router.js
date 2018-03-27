@@ -22,7 +22,10 @@ router.get('/result/:target/:tests/:assertions', function(req, res) {
     let target = validateInteger(req.params.target, data.length - 1, 'target');
     let tests = validateInteger(req.params.tests, data[target].maxTests, 'value of added tests');
     let assertions = validateInteger(req.params.assertions, data[target].maxAssertions, 'value of added assertions');
-    res.json(data[target].matrix[tests][assertions]);
+    let result = data[target].matrix[tests][assertions];
+    if(result === undefined)
+        result = {killed: data[target].origKilled, covered: data[target].origCovered}; //Fallback to some parameter sets without values, i.e. 0 tests multiple assertions
+    res.json(result);
 });
 
 function validateInteger(value, max, name) {
