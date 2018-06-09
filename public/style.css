@@ -6,6 +6,34 @@
 
 .tests-input { fill: rgb(115, 197, 253); }
 
+circle.placeholder { fill: gray; r:1; }
+
+.placeholder { fill: #f3f3f3; }
+
+circle.killed {
+  fill: green; r: 3;
+}
+
+circle.covered {
+  fill: rgb(0, 107, 174); r: 2;
+}
+
+circle.not-covered {
+  fill: yellow;
+}
+
+circle.class {
+  stroke: lightcoral;
+  stroke-width: 1px;
+  fill: transparent;
+}
+
+circle.method {
+  stroke: lightblue;
+  stroke-width: 1px;
+  fill: transparent;
+}
+
 .d3-tip {
   line-height: 1;
   font-weight: bold;

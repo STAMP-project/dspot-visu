@@ -4,8 +4,8 @@ const jsonfile = require('jsonfile');
 
 
 //TODO: This could be stored in a configuration file
-const DATA_DIR = './data';
-const PROJECT = 'javapoet';
+const DATA_DIR = './data/traccar';
+const PROJECT = 'traccar';
 
 function getProjectData() {
     const project = jsonfile.readFileSync(path.join(DATA_DIR, PROJECT + '.json'));

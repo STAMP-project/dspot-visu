@@ -1,3 +1,4 @@
+const fs = require('fs');
 const express = require('express');
 const data = require('./data-manager.js');
 
@@ -34,5 +35,17 @@ function validateInteger(value, max, name) {
         return result;
     throw new Error("The " + name + " must be a non-negative integer lower or equal than " + max + " instead of '" + value + "'.");
 }
+
+router.get('/details/:target/:tests/:assertions', function(req, res, next) {
+    let target = validateInteger(req.params.target, data.length - 1, 'target');
+    //TODO: Find an elegant way to mode this to the data manager --> export an utility object alongside the matrix
+    const filePath = './data/javapoet/' + data[target].name + '_' + req.params.assertions + '_' + req.params.tests + '.json';
+    if(!fs.existsSync(filePath)) {
+        res.status(404).send('Not found');
+        return;
+    }
+    const readable = fs.createReadStream(filePath);
+    readable.pipe(res);
+});
 
 module.exports = router;
