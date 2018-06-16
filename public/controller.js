@@ -39,6 +39,11 @@ class MutantStatus {
         return DetectionStatus.NotCovered;
     }
 
+    reset() {
+        this.detected.clear();
+        this.covered.clear();
+    }
+
 }
 
 class Controller {
@@ -47,6 +52,9 @@ class Controller {
         this.visualization = visualization;
         this.controlPanel = controlPanel;
         this.inputManager = inputManager;
+
+        this.doUpdate = this.update.bind(this);
+        this.doAmplify = this.onInput.bind(this);
     }
 
     initialize() {
@@ -67,12 +75,11 @@ class Controller {
                 console.log("Tests initialized");
 
                 })])
-        .then(this.initialMutantStatus.bind(this));
-    }
-
-    acceptInput() {
-        console.log("Ready to accept input");
-        this.inputManager.onInput(this.onInput.bind(this));
+        .then(
+            x => {
+                this.inputManager.on(SIGNALS.START, this.startAmplification.bind(this))
+            }
+        );
     }
 
     initializeMutants(data) {
@@ -82,22 +89,20 @@ class Controller {
         this.mutants = data.map(record => {
             record.status = new MutantStatus();
             self.mutantById[record.id] = record;
-            return record;  
+            return record;
         });
     }
 
-    initialMutantStatus() {
-        console.log("Getting the initial state for mutants");
-        const self = this;
-
-        let requests = this.tests.map( test =>
-            $.ajax(`/project/${PROJECT}/detection/${test.name}/${test.amplification.assertions}/${test.amplification.tests}/`)
-            .then((data) => {
-                self.updateMutants(data);
-                self.visualization.update(); //TODO: This should be done at the end
-            })
-        )
-        Promise.all(requests).then(this.acceptInput.bind(this));
+    startAmplification() {
+        this.mutants.forEach(m => m.status.reset());
+        this.tests.forEach(t => t.amplification = {tests: 0, assertions: 0});
+        this.inputManager.off(SIGNALS.AMPLIFY, this.doAmplify);
+        this.controlPanel.update();
+        Promise.all(this.tests.map(
+            test => $.ajax(`/project/${PROJECT}/detection/${test.name}/${test.amplification.assertions}/${test.amplification.tests}/`)
+            .then(this.doUpdate)        
+        )).then(res => 
+            this.inputManager.on(SIGNALS.AMPLIFY, this.doAmplify));
     }
 
     initializeTests(data) {
@@ -107,23 +112,13 @@ class Controller {
         });
     }
 
-    onInput(input) { //TODO: Rethink this. Probably set events for the input manager instead of a callback
-        if(input.command !== undefined) 
-            this.handleCommand(input);
-        else if(input.unit !== undefined) 
-            this.handleAmplificationUnit(input);
-    }
-
-
-    handleAmplificationUnit(input) {
-
+    onInput(input) { //TODO: Rethink again, let the input manager send both things, maybe with two different events.
         if(input.unit >= this.tests.length) return;
 
         let test = this.tests[input.unit];
         let currentAmplification = test.amplification;
 
         let params = {tests: currentAmplification.tests, assertions: currentAmplification.assertions };
-        // debugger;
         const validate = (field) => {
             if(input[field] === undefined) return;
             if(input[field] < 0 || input[field] >= test[field]) {
@@ -150,11 +145,11 @@ class Controller {
             });
     }
 
-    handleCommand(input) {
-        console.log(this.visualization.image);
+    update(data) {
+        this.updateMutants(data);
+        this.visualization.update();
     }
     
-
     updateMutants(data) {
         for(let mutant of this.mutants) {
             mutant.status.remove(data.name);
@@ -169,5 +164,36 @@ class Controller {
                 mutant.status.addCoverage(data.name);
             }
         }
+    }
+
+    saveVisualization() {
+
+    }
+
+    get _styles() {
+        let styles = '<defs><style type="text/css"><![CDATA[';
+        for(let sheet of document.styleSheets)
+            for(let rule of sheet.cssRules)
+                styles += ' ' + rule.cssText
+        return styles + ']]></style></defs>';
+    }
+
+    get visualizationImage() {
+
+        //TODO: This is not working for the moment
+        let outputCanvas = document.createElement('svg');
+        outputCanvas.innerHTML = this._styles + this.container.html();
+        let serializer = new XMLSerializer();
+        let result = serializer.serializeToString(outputCanvas);
+
+        if(!result.match(/^<svg[^>]+xmlns="http\:\/\/www\.w3\.org\/2000\/svg"/)){
+            result = result.replace(/^<svg/, '<svg xmlns="http://www.w3.org/2000/svg"');
+        }
+        if(!result.match(/^<svg[^>]+"http\:\/\/www\.w3\.org\/1999\/xlink"/)){
+            result = result.replace(/^<svg/, '<svg xmlns:xlink="http://www.w3.org/1999/xlink"');
+        }
+
+        return '<?xml version="1.0" standalone="no"?>' + result;
+
     }
 }

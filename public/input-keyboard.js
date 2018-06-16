@@ -1,6 +1,8 @@
-class InputKeyboard {
+class InputKeyboard extends Input {
 
     constructor() {
+        super(); //TODO: Add Signals for save and start.
+
         this.keyMapping = {
             33: {unit: 0, attr: "assertions", delta: -1},
             64: {unit: 0, attr: "assertions", delta:  1},
@@ -40,11 +42,18 @@ class InputKeyboard {
 
     processEvent(evt) {
 
-        let parameters = this.keyMapping[evt.keyCode];
-        if(parameters === undefined) {
-            this.callback({command: 'image'});
+        if(evt.keyCode === 32) {
+            this.trigger(SIGNALS.START);
             return;
         }
+
+        if(evt.keyCode === 19 && evt.ctrlKey) {
+            this.trigger(SIGNALS.SAVE);
+            return;
+        }
+
+        let parameters = this.keyMapping[evt.keyCode];
+        if(parameters === undefined) return;
         
         if(parameters.unit >= this.inputs.length)
         return;
@@ -56,13 +65,8 @@ class InputKeyboard {
             return; //Out of bound
         let message = {unit: parameters.unit};
         message[parameters.attr] = value;
-        unit[parameters.attr] = value;
-        this.callback(message);
-    }
+        unit[parameters.attr] = value; //TODO: This should be done in the controller
 
-    
-    
-    onInput(callback) {
-        this.callback = callback;
+        this.trigger(SIGNALS.AMPLIFY, message);
     }
 }

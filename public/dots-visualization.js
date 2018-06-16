@@ -108,31 +108,4 @@ class DotsVisualization {
                         .attr('class', (d, i) => 'mutant ' + this.statusToClass(d));
                         //.attr('r', this.statusToRadius.bind(this));
     }
-
-    get _styles()  {
-        let styles = '<defs><style type="text/css"><![CDATA[';
-        for(let sheet of document.styleSheets)
-            for(let rule of sheet.cssRules)
-                styles += ' ' + rule.cssText
-        return styles + ']]></style></defs>';
-    }
-
-    get image() {
-
-        //TODO: This is not working for the moment
-        let outputCanvas = document.createElement('svg');
-        outputCanvas.innerHTML = this._styles + this.container.html();
-        let serializer = new XMLSerializer();
-        let result = serializer.serializeToString(outputCanvas);
-
-        if(!result.match(/^<svg[^>]+xmlns="http\:\/\/www\.w3\.org\/2000\/svg"/)){
-            result = result.replace(/^<svg/, '<svg xmlns="http://www.w3.org/2000/svg"');
-        }
-        if(!result.match(/^<svg[^>]+"http\:\/\/www\.w3\.org\/1999\/xlink"/)){
-            result = result.replace(/^<svg/, '<svg xmlns:xlink="http://www.w3.org/1999/xlink"');
-        }
-
-        return '<?xml version="1.0" standalone="no"?>' + result;
-
-    }
 }

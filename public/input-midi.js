@@ -1,5 +1,9 @@
 
-class InputMIDI {
+class InputMIDI extends Input {
+
+    constructor() {
+        super();
+    }
 
     initialize(tests) {
         this.initializeScales(tests);

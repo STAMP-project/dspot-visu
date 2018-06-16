@@ -13,10 +13,13 @@ html(lang="en")
         //- script(src="https://code.jquery.com/jquery-3.2.1.min.js", integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=", crossorigin="anonymous")
     body
         svg
-            g#canvas
-        script(src="/public/input-panel.js")
+            g#visualization
+            g#control-panel
+        script(src="/public/signals.js")
+        script(src="/public/input.js")
         script(src="/public/input-midi.js")
         script(src="/public/input-keyboard.js")
+        script(src="/public/input-panel.js")
         script(src="/public/dots-visualization.js")
         script(src="/public/controller.js")
         script.
@@ -32,13 +35,13 @@ html(lang="en")
             const container = d3.select('#canvas')
             const CONTROL_PANEL_WIDTH = 100;
             const app = new Controller(
-                            new DotsVisualization(container, {
+                            new DotsVisualization(d3.select('#visualization'), {
                                 left: CONTROL_PANEL_WIDTH,
                                 top: 0,
                                 width: window.innerWidth - CONTROL_PANEL_WIDTH,
                                 height: window.innerHeight
                             }), 
-                            new InputPanel(container, {
+                            new InputPanel(d3.select('#control-panel'), {
                                 left: 0,
                                 top: 0,
                                 width: CONTROL_PANEL_WIDTH,
@@ -46,5 +49,6 @@ html(lang="en")
                             }), 
                             //new InputMIDI());
                             new InputKeyboard());
+                            
             app.initialize();
             
