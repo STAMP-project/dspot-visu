@@ -1,4 +1,4 @@
-body {margin: 0; padding: 0; }
+body {margin: 0; padding: 0; position: relative;}
 
 .mutants-covered { fill: rgb(0, 107, 174); }
 
@@ -6,9 +6,19 @@ body {margin: 0; padding: 0; }
 
 .assertions-input { fill: rgb(255, 91, 1); }
 
-.tests-input { fill: rgb(115, 197, 253); }
+.tests-input { fill: rgb(115, 197, 253); color: rgb(115, 197, 253);}
 
 /*circle.placeholder { fill: gray; r: 1 }*/
+
+.display {
+  position: absolute;
+  right: 50px;
+  text-align: right;
+  text-anchor: end;
+}
+
+.display.killed { color: lime; }
+.display.covered { top: 50px; color: #ffb900;}
 
 .placeholder { fill: #f3f3f3; }
 

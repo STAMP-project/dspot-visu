@@ -59,7 +59,8 @@ class DotsVisualization {
                             .attr('class', 'class')
                             .attr('cx', d => this.options.left + d.x)
                             .attr('cy', d => this.options.top + d.y)
-                            .attr('r', d => d.r);
+                            .attr('r', d => d.r)
+                                .append('title').text(d => d.data.id);
 
         this.container.selectAll('circle.method')
                     .data(this.layout.descendants().filter(d => d.depth == 2))
@@ -68,7 +69,8 @@ class DotsVisualization {
                             .attr('class', 'method')
                             .attr('cx', d => this.options.left + d.x)
                             .attr('cy', d => this.options.top + d.y)
-                            .attr('r', d => d.r);
+                            .attr('r', d => d.r)
+                                .append('title').text(d => d.data.id);
 
         this.container.selectAll('circle.mutant')
                     .data(this.mutants)
@@ -77,8 +79,10 @@ class DotsVisualization {
                             .attr('class', 'mutant placeholder')
                             .attr('cx', n => this.options.left + n.position.x)
                             .attr('cy', n => this.options.top + n.position.y)
-                            .attr('r', 1);
-
+                            .attr('r', 1)
+                                .append('title').text(d => {
+                                    return `${d.mutator} on line ${d.line}`
+                                });
     }
 
     statusToClass(mutant) {
@@ -100,7 +104,6 @@ class DotsVisualization {
     }
 
     update() {
-        console.log('Updating visualization');
         this.container.selectAll('circle.mutant')
                     .data(this.mutants)
                     .transition()

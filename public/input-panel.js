@@ -8,7 +8,7 @@ class InputPanel {
             width: 100,
             height: window.innerHeight,
             padding: 5,
-            font_size: 12,
+            text_height: 30,
             knob: {
                 radius: 30
             },
@@ -28,10 +28,8 @@ class InputPanel {
     positionScales() {
 
         let vertical = this.options.height >= this.options.width;
-        console.log(this.options.height);
 
-        let requiredUnitHeight = 2 * this.options.knob.radius + 3 * this.options.padding + this.options.slider.width;
-        console.log(requiredUnitHeight);
+        let requiredUnitHeight = 2 * this.options.knob.radius + 3 * this.options.padding + this.options.slider.height + 2 * this.options.text_height;
         let availableUnitHeight = this.options.height/(vertical?this.tests.length:1);
         console.log(availableUnitHeight)
         let verticalMargin = (availableUnitHeight - requiredUnitHeight)/2;
@@ -54,7 +52,7 @@ class InputPanel {
         return {
             cy: (i) => top(i) + verticalMargin/2 + this.options.knob.radius,
             cx: (i) => left(i) + availableUnitWidth/2,
-            ry: (i) => top(i) + verticalMargin/2  + 2 * this.options.knob.radius + this.options.font_size,
+            ry: (i) => top(i) + verticalMargin/2  + 2 * this.options.knob.radius + this.options.text_height,
             rx: (i) => left(i) + availableUnitWidth/2 - this.options.slider.width/2
         };
 
@@ -93,7 +91,8 @@ class InputPanel {
                     .append('path')
                         .attr('class', 'assertions-input')
                         .attr('d', (d, i) => self.arc({endAngle: 0}))
-                        .attr('transform', (d, i) => 'translate(' +  cx(i) + ',' + cy(i)  + ')'); 
+                        .attr('transform', (d, i) => 'translate(' +  cx(i) + ',' + cy(i)  + ')')
+                            .append('title').text(d => d.name); 
         
         this.container.selectAll('rect.tests-input')
                         .data(this.tests)
@@ -115,6 +114,27 @@ class InputPanel {
                         .attr('width', (d, i) => self.options.slider.width)
                         .attr('height', (d, i) => self.options.slider.height/2)
                         .attr('fill', 'lightgray');
+        
+                        
+        this.container.selectAll('text.tests-input')
+                    .data(this.tests)
+                    .enter()
+                    .append('text')
+                        .attr('class', 'tests-input')
+                        .attr('text-anchor', 'middle')
+                        .attr('x', (d, i) => cx(i))
+                        .attr('y', (d, i) => ry(i) + this.options.slider.height + self.options.text_height/2)
+                        .text('0');
+        
+        this.container.selectAll('text.assertions-input')
+                    .data(this.tests)
+                    .enter()
+                    .append('text')
+                        .attr('class', 'assertions-input')
+                        .attr('text-anchor', 'middle')
+                        .attr('x', (d, i) => cx(i))
+                        .attr('y', (d, i) => ry(i) - this.options.text_height/2)
+                        .text('0');
 
         console.log('Controls created');
 
@@ -137,6 +157,9 @@ class InputPanel {
                     .transition()
                         .duration(0)
                         .attr('height', (d, i) => this.scales[i].tests(d.amplification.tests));
+        
+        this.container.selectAll('text.tests-input').data(this.tests).transition().duration(0).text(d => d.amplification.tests);
+        this.container.selectAll('text.assertions-input').data(this.tests).transition().duration(0).text(d => d.amplification.assertions);
 
     }
 

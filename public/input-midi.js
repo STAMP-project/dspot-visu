@@ -46,6 +46,10 @@ class InputMIDI extends Input {
 
     processMessage(evt) {
         let [command, note, velocity] = evt.data;
+        if(note === 41) {
+            this.trigger(SIGNALS.START);
+            return;
+        }
         let unit;
         let isSlider = (note >= 0 && note <= 7); // All sliders
         let isKnob = (note >= 16 && note <= 23); // All knobs
@@ -65,11 +69,6 @@ class InputMIDI extends Input {
         if(isKnob) payload.assertions = this.scales[unit].knob(velocity);
        
         
-        this.callback(payload);
+        this.trigger(SIGNALS.AMPLIFY, payload);
     }
-
-    onInput(callback) {
-        this.callback = callback;
-    }
-
 }

@@ -12,6 +12,8 @@ html(lang="en")
         //- script(src="//d3js.org/d3.v4.min.js")
         //- script(src="https://code.jquery.com/jquery-3.2.1.min.js", integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=", crossorigin="anonymous")
     body
+        h1.display.killed
+        h1.display.covered
         svg
             g#visualization
             g#control-panel
@@ -47,8 +49,8 @@ html(lang="en")
                                 width: CONTROL_PANEL_WIDTH,
                                 height: window.innerHeight
                             }), 
-                            //new InputMIDI());
-                            new InputKeyboard());
+                            new InputMIDI());
+                            //new InputKeyboard());
                             
             app.initialize();
             

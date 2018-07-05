@@ -132,14 +132,12 @@ class Controller {
         let self = this;
 
         $.ajax(`/project/${PROJECT}/detection/${test.name}/${test.amplification.assertions}/${test.amplification.tests}/`)
-            .then((data) => {
-                self.updateMutants(data);
-                self.visualization.update();
-            });
+            .then(this.doUpdate);
     }
 
     update(data) {
         this.updateMutants(data);
+        this.updateDisplay();
         this.visualization.update();
     }
     
@@ -158,6 +156,19 @@ class Controller {
                 mutant.status.addCoverage(data.test_class);
         }
         
+    }
+
+    updateDisplay() {
+        let covered = 0
+        let killed = 0;
+
+        for(let mutant of this.mutants) {
+            if(mutant.status.isDetected) killed++;
+            else if(mutant.status.isOnlyCovered) covered++;
+        }
+        
+        $('.display.covered').text(covered);
+        $('.display.killed').text(killed);
     }
 
     saveVisualization() {

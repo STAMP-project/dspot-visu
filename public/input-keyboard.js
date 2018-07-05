@@ -27,7 +27,7 @@ class InputKeyboard extends Input {
 
     initialize(tests) {
         this.inputs = tests.map(t => {
-            console.log(t);
+            //console.log(t);
            return {
                tests: 0,
                topTests: t.tests + 1,
