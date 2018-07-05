@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
-const dataRouter = require('./data-router.js');
+//const dataRouter = require('./data-router.js');
 
 const internalRouter = require('./internal-router.js');
 const projectRouter = require('./project-router.js');
@@ -21,10 +21,10 @@ app.use('/project', projectRouter);
 
 app.use('/internal', internalRouter);
 
-app.use('/data', dataRouter);
-app.get('/', function(req, res){
-  res.sendFile(path.join(__dirname, 'index.html'));
-});
+//app.use('/data', dataRouter);
+// app.get('/', function(req, res){
+//   res.sendFile(path.join(__dirname, 'index.html'));
+// });
 
 var server = app.listen(3000, function(){
   console.log('Server listening on port 3000');

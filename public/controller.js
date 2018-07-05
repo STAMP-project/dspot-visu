@@ -83,14 +83,8 @@ class Controller {
     }
 
     initializeMutants(data) {
-        // debugger;
-        this.mutantById = {};
-        let self = this;
-        this.mutants = data.map(record => {
-            record.status = new MutantStatus();
-            self.mutantById[record.id] = record;
-            return record;
-        });
+        this.mutants = data;
+        this.mutants.forEach(m => m.status = new MutantStatus());
     }
 
     startAmplification() {
@@ -101,8 +95,7 @@ class Controller {
         Promise.all(this.tests.map(
             test => $.ajax(`/project/${PROJECT}/detection/${test.name}/${test.amplification.assertions}/${test.amplification.tests}/`)
             .then(this.doUpdate)        
-        )).then(res => 
-            this.inputManager.on(SIGNALS.AMPLIFY, this.doAmplify));
+        )).then(res => this.inputManager.on(SIGNALS.AMPLIFY, this.doAmplify));
     }
 
     initializeTests(data) {
@@ -121,8 +114,8 @@ class Controller {
         let params = {tests: currentAmplification.tests, assertions: currentAmplification.assertions };
         const validate = (field) => {
             if(input[field] === undefined) return;
-            if(input[field] < 0 || input[field] >= test[field]) {
-                console.error(`Wrong ${field} value: ${input[field]} not in [0,${test[field]}) for ${test.name}`);
+            if(input[field] < 0 || input[field] > test[field]) {
+                console.error(`Wrong ${field} value: ${input[field]} not in [0,${test[field]}] for ${test.name}`);
                 return;
             }
             params[field] = input[field];
@@ -152,18 +145,19 @@ class Controller {
     
     updateMutants(data) {
         for(let mutant of this.mutants) {
-            mutant.status.remove(data.name);
+            mutant.status.remove(data.test_class);
         }
+        
         for(let record of data.mutants) {
-            let mutant = this.mutantById[record.id];
-
-            if(record.detected) {
-                mutant.status.addDetection(data.name);
-            }
-            else {
-                mutant.status.addCoverage(data.name);
-            }
+            // console.log("updating " + record.id);
+            let mutant = this.mutants[record.id];
+            //debugger;
+            if(record.detected)
+                mutant.status.addDetection(data.test_class);
+            else
+                mutant.status.addCoverage(data.test_class);
         }
+        
     }
 
     saveVisualization() {

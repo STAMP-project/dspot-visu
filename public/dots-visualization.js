@@ -13,7 +13,7 @@ class DotsVisualization {
     assignPositions() {
         let root = {id: "", children: []};
         for(let mutant of this.mutants) {
-            let path = [mutant.className, mutant.method, mutant.id];
+            let path = [mutant.class_name, mutant.method, mutant.id];
             let current = root;
             for(let step of path) {
                 let child = current.children.find(n => n.id === step);
@@ -77,7 +77,7 @@ class DotsVisualization {
                             .attr('class', 'mutant placeholder')
                             .attr('cx', n => this.options.left + n.position.x)
                             .attr('cy', n => this.options.top + n.position.y)
-                            .attr('r', 3);
+                            .attr('r', 1);
 
     }
 
@@ -105,7 +105,7 @@ class DotsVisualization {
                     .data(this.mutants)
                     .transition()
                     .duration(0)
-                        .attr('class', (d, i) => 'mutant ' + this.statusToClass(d));
-                        //.attr('r', this.statusToRadius.bind(this));
+                        .attr('class', (d, i) => 'mutant ' + this.statusToClass(d))
+                        .attr('r', this.statusToRadius.bind(this));
     }
 }

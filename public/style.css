@@ -1,3 +1,5 @@
+body {margin: 0; padding: 0; }
+
 .mutants-covered { fill: rgb(0, 107, 174); }
 
 .mutants-killed { fill: rgb(0, 148, 255); }
@@ -6,17 +8,19 @@
 
 .tests-input { fill: rgb(115, 197, 253); }
 
-circle.placeholder { fill: gray; r:1; }
+/*circle.placeholder { fill: gray; r: 1 }*/
 
 .placeholder { fill: #f3f3f3; }
 
-circle.killed {
-  fill: green; r: 3;
+.mutant.killed {
+  fill: lime;
 }
 
-circle.covered {
-  fill: rgb(0, 107, 174); r: 2;
+.mutant.covered {
+  fill: #ffb900;
 }
+
+.mutant.placeholder {fill: lightgray; }
 
 circle.not-covered {
   fill: yellow;
@@ -24,12 +28,12 @@ circle.not-covered {
 
 circle.class {
   stroke: lightcoral;
-  stroke-width: 1px;
+  stroke-width: 2px;
   fill: transparent;
 }
 
 circle.method {
-  stroke: lightblue;
+  stroke: #049eff;
   stroke-width: 1px;
   fill: transparent;
 }

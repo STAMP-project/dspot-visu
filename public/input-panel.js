@@ -64,10 +64,10 @@ class InputPanel {
     initialize(tests) {
         this.tests = tests;
         const range = [7 * Math.PI / 6, 17*Math.PI/6];
-        this.scales = tests.map(t => {
+        this.scales = tests.map(t => {  
             return { 
-                tests: d3.scaleLinear().range([this.options.slider.height, 0]).domain([0, t.tests - 1]), 
-                assertions: d3.scaleLinear().range(range).domain([0, t.assertions - 1])
+                tests: d3.scaleLinear().range([this.options.slider.height, 0]).domain([0, t.tests]), 
+                assertions: d3.scaleLinear().range(range).domain([0, t.assertions])
             };
         });
 
@@ -126,7 +126,11 @@ class InputPanel {
                     .data(this.tests)
                     .transition()
                         .duration(0)
-                        .attr('d', (d, i) => this.arc({endAngle: this.scales[i].assertions(d.amplification.assertions)}));
+                        .attr('d', (d, i) => {
+                            let endAngle = this.scales[i].assertions(d.amplification.assertions);
+                            //if(isNaN(endAngle))debugger;
+                            return this.arc({endAngle: endAngle})
+                        });
         
         this.container.selectAll('rect.placeholder')
                     .data(this.tests)

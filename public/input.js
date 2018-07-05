@@ -11,4 +11,5 @@ class Input extends Triggerer {
     constructor() {
         super([SIGNALS.START, SIGNALS.SAVE, SIGNALS.AMPLIFY])
     }
+
 }

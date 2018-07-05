@@ -25,24 +25,31 @@ class InputKeyboard extends Input {
         };
     }
 
-
     initialize(tests) {
         this.inputs = tests.map(t => {
             console.log(t);
            return {
                tests: 0,
-               topTests: t.tests,
+               topTests: t.tests + 1,
                assertions: 0,
-               topAssertions: t.assertions,
+               topAssertions: t.assertions + 1,
            };
         });
 
         window.onkeypress = this.processEvent.bind(this);
     }
 
+    reset() {
+        for(let item of this.inputs) {
+            item.tests = 0;
+            item.assertions = 0;
+        }
+    }
+
     processEvent(evt) {
 
         if(evt.keyCode === 32) {
+            this.reset();
             this.trigger(SIGNALS.START);
             return;
         }

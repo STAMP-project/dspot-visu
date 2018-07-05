@@ -13,8 +13,8 @@ class InputMIDI extends Input {
     initializeScales(tests) {
         this.scales = tests.map(t => {
             return {
-                slider: d3.scaleQuantize().domain([0, 127]).range(d3.range(t.tests)),
-                knob: d3.scaleQuantize().domain([0, 127]).range(d3.range(t.assertions)),
+                slider: d3.scaleQuantize().domain([0, 127]).range(d3.range(t.tests + 1)),
+                knob: d3.scaleQuantize().domain([0, 127]).range(d3.range(t.assertions + 1)),
             }
         });
     }
