@@ -1,10 +1,6 @@
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
-//const dataRouter = require('./data-router.js');
-
-const internalRouter = require('./internal-router.js');
-const projectRouter = require('./project-router.js');
 
 const app = express();
 app.set('view engine', 'pug')
@@ -16,15 +12,11 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 })); 
 
 app.use('/public', express.static(path.join(__dirname, 'public')));
-app.use('/raw', express.static(path.join(__dirname, 'data')));
-app.use('/project', projectRouter);
+app.use('/data', express.static(path.join(__dirname, 'data')));
 
-app.use('/internal', internalRouter);
-
-//app.use('/data', dataRouter);
-// app.get('/', function(req, res){
-//   res.sendFile(path.join(__dirname, 'index.html'));
-// });
+app.get('/packing/:project/', function(request, response) {
+  response.render('packing.pug', {project: request.params.project});
+});
 
 var server = app.listen(3000, function(){
   console.log('Server listening on port 3000');
