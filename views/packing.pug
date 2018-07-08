@@ -32,17 +32,36 @@ html(lang="en")
         +script("visualization/packing")
 
         script.
-            const PROJECT = "#{project}";
-            let fake = { update() {
-                console.log('updating')}, 
-                initialize() {console.log('initialzing');} 
-            };
-            d3.select('svg')
-                .attr('width', window.innerWidth)
-                .attr('height', window.innerHeight);
-
-            const container = d3.select('#canvas')
             const CONTROL_PANEL_WIDTH = 100;
+            const PADDING = 10;
+
+            d3.select('svg')
+                .attr('width', window.innerWidth - PADDING)
+                .attr('height', window.innerHeight - PADDING);
+
+            const container = d3.select('#canvas');
+        
+        if keyboard
+            script.
+                const input = new KeyboardInput();
+        else
+            script.
+                const input = new MIDIInput();
+        script.
+            const panelOptions =  {
+                left: 0,
+                top: 0,
+                width: CONTROL_PANEL_WIDTH,
+                height: window.innerHeight
+            };
+        
+        unless full_panel
+            script.
+                panelOptions.show_labels = false;
+                panelOptions.show_knobs = false;
+                panelOptions.slider_height = 150;
+        
+        script.
             const app = new Controller(
                             "#{project}",
                             new PackingVisualization(d3.select('#visualization'), {
@@ -51,12 +70,5 @@ html(lang="en")
                                 width: window.innerWidth - CONTROL_PANEL_WIDTH,
                                 height: window.innerHeight
                             }), 
-                            new InputPanel(d3.select('#control-panel'), {
-                                left: 0,
-                                top: 0,
-                                width: CONTROL_PANEL_WIDTH,
-                                height: window.innerHeight
-                            }), 
-                            //new MIDIInput());
-                            new KeyboardInput());
-            
+                            new InputPanel(d3.select('#control-panel'), panelOptions), 
+                            input);

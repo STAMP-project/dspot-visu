@@ -15,7 +15,11 @@ app.use('/public', express.static(path.join(__dirname, 'public')));
 app.use('/data', express.static(path.join(__dirname, 'data')));
 
 app.get('/packing/:project/', function(request, response) {
-  response.render('packing.pug', {project: request.params.project});
+  response.render('packing.pug', {
+    project: request.params.project,
+    keyboard: request.query.keyboard !== undefined,
+    full_panel: request.query.panel !== undefined
+  });
 });
 
 var server = app.listen(3000, function(){
