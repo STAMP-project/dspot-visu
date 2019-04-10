@@ -20,7 +20,8 @@ body {margin: 0; padding: 0; position: relative;}
 .display.killed { color: lime; }
 .display.covered { top: 50px; color: #ffb900;}
 
-.placeholder { fill: #f3f3f3; }
+/*.placeholder { fill: #f3f3f3; }*/
+.placeholder { fill: darkgray; }
 
 .mutant.killed {
   fill: lime;
@@ -30,7 +31,8 @@ body {margin: 0; padding: 0; position: relative;}
   fill: #ffb900;
 }
 
-.mutant.placeholder {fill: lightgray; }
+/*.assertions-input.placeholder {fill: lightgray; }*/
+.mutant.placeholder {fill: darkgray; }
 
 circle.not-covered {
   fill: yellow;
