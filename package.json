@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "debug": "DEBUG=stamp* node app.js",
-    "start": "node app.js"
+    "start": "node --use_strict app.js"
   },
   "repository": {
     "type": "git",
