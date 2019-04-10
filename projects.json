@@ -1,0 +1,14 @@
+[
+    {
+        "name": "jsoup",
+        "description": "is a Java library for working with real-world HTML. It provides a very convenient API for extracting and manipulating data, using the best of DOM, CSS, and jquery-like methods.",
+        "url": "",
+        "facts": ["Latest stable version released in April 2018", "Development started around 2010"],
+        "commits": 1199,
+        "releases": 37,
+        "loc": {"app": 11014, "test": 5844},
+        "classes": {"app": 238, "test": 37},
+        "test_cases": 529,
+        "coverage": {"line": 77, "branch": 72}
+    }
+]
