@@ -35,3 +35,9 @@ http://localhost:3000/packing/jsoup
 Then
 - press play for the initial test run
 - the sliders control the amplification
+
+## Slides
+
+```
+http://localhost:3000/slides/jsoup
+```
