@@ -13,6 +13,25 @@ npm install #to install dependencies
 ```sh
 node app.js #to start
 ```
+The demo can run with data from jsoup and mybatis
+
+## Keyboard demo
+For example, with jsoup
+
 ```
 http://localhost:3000/packing/jsoup?keyboard
 ```
+Then
+- press space bar to have the initial test run
+- 1 and 2 control the first slider
+- 3 and 4 control the second slider
+
+## Mixing table demo
+For example, with jsoup
+
+```
+http://localhost:3000/packing/jsoup
+```
+Then
+- press play for the initial test run
+- the sliders control the amplification
