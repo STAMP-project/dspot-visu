@@ -13,7 +13,7 @@ npm install #to install dependencies
 ```sh
 node app.js #to start
 ```
-The demo can run with data from jsoup and mybatis
+The demo can run with data from jsoup and mybatis. It runs correctly on Chrome (tested on Linux and MacOS).
 
 ## Keyboard demo
 For example, with jsoup
