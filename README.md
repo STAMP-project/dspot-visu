@@ -13,5 +13,6 @@ npm install #to install dependencies
 ```sh
 node app.js #to start
 ```
-http://localhost:3000/packing/jsoup
-
+```
+http://localhost:3000/packing/jsoup?keyboard
+```
