@@ -1,0 +1,55 @@
+<html>
+	<head>
+		<link rel="stylesheet" href="../css/reveal.css">
+		<link rel="stylesheet" href="../css/theme/white.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section id="title-slide">
+                    <h1>DSpot Demo</h1>
+                    <h4>Oscar L. Vera</h4>
+                </section>
+				<section id="project-slide">
+                    <h3>Target project: jsoup</h3>
+                    <blockquote cite="https://github.com/jhy/jsoup">
+                        <em>jsoup</em> is a Java library for working with real-world HTML. It provides a very convenient API for extracting and manipulating data, using the best of DOM, CSS, and jquery-like methods.
+                    </blockquote>
+                    <a href="https://github.com/jhy/jsoup">"https://github.com/jhy/jsoup"</a>
+                </section>
+                <section id="project-features-slide">
+                        <h3>jsoup project</h3>
+                        <ul>
+                            <li>Lastest stable version released in April 2018</li>
+                            <li>Development started in 2010</li>
+                            <li>1,199 commits</li>
+                            <li>37 releases</li>
+                            <li>11014 lines of code(app)</li> <!-- cloc src/main/ -->
+                            <li>5844 lines of code(test)</li> <!-- cloc src/test/ -->
+                            <li>238 classes</li> <!-- find target/classes/ -name *.class | wc -l -->
+                            <li>37 test  classes</li> <!-- find target/test-classes/ -name *.class | wc -l -->
+                            <li>529 test cases</li> <!-- mvn clean test -->
+                            <li>77% line coverage</li>
+                            <li>72% branch coverage</li>
+                        </ul>
+                </section>
+                <section>
+                        <h1 class="display killed"></h1>
+                        <h1 class="display covered"></h1>
+                        <svg>
+                            <g id="visualization"></g>
+                            <g id="control-panel"></g>
+                        </svg>
+                </section>
+			</div>
+        </div>
+        
+        <script>
+        </script>
+
+		<script src="../js/lib/reveal.js"></script>
+		<script>
+            Reveal.initialize();
+		</script>
+	</body>
+</html>

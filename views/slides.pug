@@ -1,0 +1,108 @@
+mixin script(path)
+    script(src="/public/js/" + path + '.js')
+
+<!DOCTYPE html>
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        meta(http-equiv="X-UA-Compatible", content="ie=edge")
+        title DSpot Demo
+        link(rel="stylesheet", href="/public/css/reveal.css")
+        //- Slides theme
+        link(rel="stylesheet", href="/public/css/theme/white.css")
+        //- Syntax highlighting
+        link(rel="stylesheet", href="/public/css/highlight.css")
+        link(rel="stylesheet", href="/public/css/style.css")
+        style.
+            .reveal .slide-number {
+                font-size: .5em;
+                background-color: rgba(0, 0, 0, 0.4);
+                width: 20px;
+                text-align: center;
+                border-radius: 50%;
+            }
+    body
+        .reveal
+            .slides.left
+                section#title-slide
+                    h1 DSpot Demo
+                    small Benjamin Danglot, Oscar L. Vera
+                section#project-slide
+                    h3 Target project #{project.name}
+                    blockquote(cite=project.url)
+                        | #[b #{project.name}] #{project.description}
+                        a(href=project.url)= project.url
+                section#project-features-slide
+                    h3 #{project.name} project in numbers
+                    ul
+                        each fact in project.facts 
+                            li= fact
+                        li #[b #{project.commits}] commits and #[b #{project.releases}]
+                section#project-code-slide
+                    h3 #[b #{project.name}] code in numbers
+                    ul
+                        li #[b #{project.loc.app}] application LOC in #[b #{project.classes.app}] classes
+                        li #[b #{project.loc.test}] test LOC in #[b #{project.classes.test}] classes
+                        li #[b #{project.test_cases}] test cases achieving
+                            ul
+                                li #[b #{project.coverage.line}%] line coverage
+                                li #[b #{project.coverage.branch}%] branch coverage
+                section#test-cases
+                    h3 Input test cases
+                    pre
+                        code.hljs.java
+                            |public class AttributeTest {
+                            |  @Test public void html() {
+                            |    Attribute attr = new Attribute("key", "value &");
+                            |    assertEquals("key=\"value &amp;\"", attr.html());
+                            |    assertEquals(attr.html(), attr.toString());
+                            |  }
+                            |  ...
+                            |}
+                section#pre-demo-slide
+                    a(href="/packing/" + project.name + "/", target="tab")
+                        h3 Demo
+                section
+                    h3 Result close-up
+                    pre
+                        code.hlsj.java
+                            |@Test public void html() {
+                            |  Attribute attr = new Attribute("key", "value &");
+                            |  assertEquals("key=\"value &amp;\"", attr.html());
+                            |  assertEquals(attr.html(), attr.toString());
+                            |}
+                    pre.fragment
+                        code.hljs.java
+                            |@Test public void html_add33() throws Exception {
+                            |  Attribute attr = new Attribute("key", "value &");
+                            |  Assert.assertEquals("key=\"value &amp;\"", attr.html());
+                            |  Assert.assertEquals("key=\"value &amp;\"", attr.toString());
+                            |  Assert.assertEquals("key", attr.getKey());
+                            |  Assert.assertEquals("value &", attr.getValue());  
+                            |}
+                    pre.fragment
+                        code.hljs.java
+                            |@Test public void htmllitString12_failAssert0() throws Exception {
+                            |  try {
+                            |    Attribute attr = new Attribute("", "value &");
+                            |    Assert.fail("IllegalArgumentException expected");
+                            |  } catch (IllegalArgumentException eee) {}
+                            |}
+        
+        +script('lib/reveal')
+        +script('lib/reveal_plugins/highlight')
+        +script('lib/head.min')
+
+        script.
+            Reveal.initialize({
+                controls: false,
+                progress: false,
+                dependencies: [
+                    {
+                        src: "/public/js/lib/reveal_plugins/highlight.js",
+                        async: true,
+                        callback: function() {console.log("hljs"); hljs.initHighlightingOnLoad();}
+                    }
+                ]
+            });
